@@ -4,8 +4,10 @@ import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import Link from 'next/link';
 import { useRouter } from 'next/dist/client/router';
+import { MainLayout } from '@/components/layout';
+import { NextPageWithLayout } from '@/models/common';
 
-const Home: NextPage = () => {
+const Home: NextPageWithLayout = () => {
   const router = useRouter();
 
   const handleGoToDetailPage = () => {
@@ -82,5 +84,7 @@ const Home: NextPage = () => {
     </div>
   );
 };
+
+Home.Layout = MainLayout;
 
 export default Home;

@@ -1,20 +1,23 @@
-import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
-import { useRouter } from 'next/dist/client/router';
-import * as React from 'react';
+import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next'
+import { useRouter } from 'next/dist/client/router'
+import * as React from 'react'
 
 interface Post {
-  id: string;
-  title: string;
+  id: string
+  title: string
 }
 
 export interface PostDetailPageProps {
-  post: any;
+  post: any
 }
 
 export default function PostDetailPage({ post }: PostDetailPageProps) {
-  const router = useRouter();
+  const router = useRouter()
 
-  if (!post) return null;
+  if (router.isFallback)
+    return <div style={{ fontSize: '30px', textAlign: 'center' }}>Loading....</div>
+
+  if (!post) return null
 
   return (
     <div>
@@ -23,29 +26,29 @@ export default function PostDetailPage({ post }: PostDetailPageProps) {
       <p>{post.title}</p>
       <p>{post.body}</p>
     </div>
-  );
+  )
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch('https://jsonplaceholder.typicode.com/posts');
-  const data = await res.json();
+  const res = await fetch('https://jsonplaceholder.typicode.com/posts')
+  const data = await res.json()
 
   return {
     paths: data.map((post: any) => ({ params: { postsId: post.id.toString() } })),
-    fallback: false,
-  };
-};
+    fallback: 'blocking',
+  }
+}
 
 export const getStaticProps: GetStaticProps<PostDetailPageProps> = async (
   context: GetStaticPropsContext
 ) => {
-  console.log('GET Static props ', context.params?.postsId);
-  const postsId = context.params?.postsId;
+  console.log('GET Static props ', context.params?.postsId)
+  const postsId = context.params?.postsId
 
-  if (!postsId) return { notFound: true };
+  if (!postsId) return { notFound: true }
 
-  const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${postsId}`);
-  const data = await res.json();
+  const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${postsId}`)
+  const data = await res.json()
 
   // console.log(data);
 
@@ -53,5 +56,6 @@ export const getStaticProps: GetStaticProps<PostDetailPageProps> = async (
     props: {
       post: data,
     },
-  };
-};
+    revalidate: 5,
+  }
+}

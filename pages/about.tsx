@@ -2,6 +2,7 @@ import { useRouter } from 'next/dist/client/router';
 import React, { useState, useEffect } from 'react';
 // import Header from '@/components/common/header';
 import dynamic from 'next/dynamic';
+import { MainLayout } from '@/components/layout';
 
 const Header = dynamic(() => import('@/components/common/header'), { ssr: false });
 
@@ -26,36 +27,18 @@ export default function AboutPage(props: AboutPageProps) {
     })();
   }, [postsId]);
 
-  const handleNextClick = () => {
-    router.push(
-      {
-        pathname: '/about',
-        query: {
-          postsId: postsId + 1,
-        },
-      },
-      undefined,
-      { shallow: true }
-    );
-  };
-
-  return (
-    <div>
-      About page
-      <Header />
-      <h1>{post && JSON.stringify(post)}</h1>
-      <button onClick={handleNextClick}>next click</button>
-    </div>
-  );
+  return <div>About page</div>;
 }
 
-export async function getStaticProps() {
-  console.log('Get static props');
+AboutPage.Layout = MainLayout;
 
-  return {
-    props: {},
-  };
-}
+// export async function getStaticProps() {
+//   console.log('Get static props');
+
+//   return {
+//     props: {},
+//   };
+// }
 
 // export async function getServerSideProps() {
 //   return {
