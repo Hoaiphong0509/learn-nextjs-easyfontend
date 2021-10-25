@@ -24,5 +24,5 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
     selfHandleResponse: false,
   })
 
-  res.status(200).json({ name: 'path - match all here' })
+//   res.status(200).json({ name: 'path - match all here' })
 }
