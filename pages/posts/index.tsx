@@ -26,19 +26,19 @@ export default function PostListPage({ posts }: PostListPageProps) {
   );
 }
 
-export const getStaticProps: GetStaticProps<PostListPageProps> = async (
-  context: GetStaticPropsContext
-) => {
-  // console.log('Static props');
+// export const getStaticProps: GetStaticProps<PostListPageProps> = async (
+//   context: GetStaticPropsContext
+// ) => {
+//   // console.log('Static props');
 
-  const res = await fetch('https://jsonplaceholder.typicode.com/posts');
-  const data = await res.json();
+//   const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+//   const data = await res.json();
 
-  // console.log(data);
+//   // console.log(data);
 
-  return {
-    props: {
-      posts: data.map((x: any) => ({ id: x.id, title: x.title })),
-    },
-  };
-};
+//   return {
+//     props: {
+//       posts: data.map((x: any) => ({ id: x.id, title: x.title })),
+//     },
+//   };
+// };
